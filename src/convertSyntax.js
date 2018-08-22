@@ -123,17 +123,12 @@ function convertSyntax(syntax) {
 
     assert(Array.isArray(subType), `Expected subType to be an array. Got ${JSON.stringify(subType)} in rule: ${JSON.stringify(rule)}`)
 
-    let verified = false
     for (const part of subType) {
       if (typeof part === 'string') {
-        if (part === 'VERIFIED')
-          verified = true
-        else {
+        if (part === 'VERIFIED') {
+          rule.subRule.push({ ruleType: 'verified' })
+        } else {
           let subRule = lookupRule(part)
-          if (verified) {
-            subRule = Object.create(subRule)
-            subRule.verified = true
-          }
           rule.subRule.push(subRule)
         }
       } else {
