@@ -489,3 +489,16 @@ test('pascal did not get verified rules', () => {
   const rule = convertSyntax(syntax)
   expect(rule.subRule[3].subRule[1].subRule.subRule[1]).toEqual({ ruleType: 'verified' })
 })
+
+it('catches non-existant types', () => {
+  const syntax = {
+    lex: [],
+    parse: {
+      main: ['one', 'NOPE:bar']
+    }
+  }
+
+  expect(() => {
+    convertSyntax(syntax)
+  }).toThrow('Failed to lookup rule NOPE from type:value pair "NOPE:bar"')
+})

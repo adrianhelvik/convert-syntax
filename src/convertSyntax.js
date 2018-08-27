@@ -163,6 +163,8 @@ function convertSyntax(syntax) {
     let subRule
 
     if (value) {
+      if (! rulesMap.has(key))
+        throw Error(`Failed to lookup rule ${key} from type:value pair "${key}:${value}"`)
       subRule = Object.create(rulesMap.get(key))
       if (subRule)
         subRule.value = value
