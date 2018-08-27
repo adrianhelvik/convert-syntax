@@ -502,3 +502,37 @@ it('catches non-existant types', () => {
     convertSyntax(syntax)
   }).toThrow('Failed to lookup rule NOPE from type:value pair "NOPE:bar"')
 })
+
+it('converts one_plus delimiters', () => {
+  const syntax = {
+    lex: [
+      ['word', /^[a-zA-Z]+/]
+    ],
+    parse: {
+      main: ['one_plus', 'word:foo', 'word:bar']
+    }
+  }
+
+  const rule = convertSyntax(syntax)
+
+  expect(rule.delimiter.ruleType).toBe('lex')
+  expect(rule.delimiter.type).toBe('word')
+  expect(rule.delimiter.value).toBe('bar')
+})
+
+it('converts zero_plus delimiters', () => {
+  const syntax = {
+    lex: [
+      ['word', /^[a-zA-Z]+/]
+    ],
+    parse: {
+      main: ['zero_plus', 'word:foo', 'word:bar']
+    }
+  }
+
+  const rule = convertSyntax(syntax)
+
+  expect(rule.delimiter.ruleType).toBe('lex')
+  expect(rule.delimiter.type).toBe('word')
+  expect(rule.delimiter.value).toBe('bar')
+})

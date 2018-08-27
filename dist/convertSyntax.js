@@ -176,11 +176,8 @@ function convertSyntax(syntax) {
     var ruleSchema = rule.ruleSchema;
 
     var subType = ruleSchema[1];
-    var delimiter = ruleSchema[2];
 
     rule.subRule = lookupRule(subType);
-
-    if (delimiter) rule.delimiter = delimiter;
   }
 
   function populateZeroPlus(rule) {
@@ -191,15 +188,18 @@ function convertSyntax(syntax) {
 
     rule.subRule = lookupRule(subType);
 
-    if (delimiter) rule.delimiter = delimiter;
+    if (delimiter) rule.delimiter = lookupRule(delimiter);
   }
 
   function populateOnePlus(rule) {
     var ruleSchema = rule.ruleSchema;
 
     var subType = ruleSchema[1];
+    var delimiter = ruleSchema[2];
 
     rule.subRule = lookupRule(subType);
+
+    if (delimiter) rule.delimiter = lookupRule(delimiter);
   }
 
   function populateMultiRule(rule) {

@@ -99,12 +99,8 @@ function convertSyntax(syntax) {
   function populateOneRule(rule) {
     const { ruleSchema } = rule
     const subType = ruleSchema[1]
-    const delimiter = ruleSchema[2]
 
     rule.subRule = lookupRule(subType)
-
-    if (delimiter)
-      rule.delimiter = delimiter
   }
 
   function populateZeroPlus(rule) {
@@ -115,14 +111,18 @@ function convertSyntax(syntax) {
     rule.subRule = lookupRule(subType)
 
     if (delimiter)
-      rule.delimiter = delimiter
+      rule.delimiter = lookupRule(delimiter)
   }
 
   function populateOnePlus(rule) {
     const { ruleSchema } = rule
     const subType = ruleSchema[1]
+    const delimiter = ruleSchema[2]
 
     rule.subRule = lookupRule(subType)
+
+    if (delimiter)
+      rule.delimiter = lookupRule(delimiter)
   }
 
   function populateMultiRule(rule) {
