@@ -10,6 +10,7 @@ const validRuleTypes = [
   'zero_plus',
   'one',
   'either',
+  'all',
 ]
 
 function convertSyntax(syntax) {
@@ -70,11 +71,21 @@ function convertSyntax(syntax) {
       case 'optional':
         populateOptionalRule(rule)
         break
+      case 'all':
+        populateAll(rule)
+        break
       default:
         throw Error(`Unknown rule type: "${rule.ruleType}" in rule ${JSON.stringify(rule)}`)
     }
 
     delete rule.ruleSchema
+  }
+
+  function populateAll(rule) {
+    const { ruleSchema } = rule
+    const subType = ruleSchema[1]
+
+    rule.subRule = lookupRule(subType)
   }
 
   function populateOptionalRule(rule) {

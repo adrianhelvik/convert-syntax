@@ -536,3 +536,27 @@ it('converts zero_plus delimiters', () => {
   expect(rule.delimiter.type).toBe('word')
   expect(rule.delimiter.value).toBe('bar')
 })
+
+it('can convert all rules', () => {
+  const syntax = {
+    lex: [
+      ['one', /^1/],
+      ['two', /^2/],
+    ],
+    parse: {
+      main: ['all', ['sequence', [
+        'one',
+        'two',
+        'one',
+      ]]],
+    },
+  }
+
+  const rule = convertSyntax(syntax)
+
+  expect(rule.type).toBe('main')
+  expect(rule.ruleType).toBe('all')
+
+  expect(rule.subRule.type).toBe('anonymous')
+  expect(rule.subRule.ruleType).toBe('sequence')
+})
