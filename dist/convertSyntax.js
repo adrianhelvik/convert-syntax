@@ -20,7 +20,7 @@ var _assert2 = _interopRequireDefault(_assert);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var validRuleTypes = ['sequence', 'optional', 'many', 'one_plus', 'zero_plus', 'one', 'either'];
+var validRuleTypes = ['sequence', 'optional', 'many', 'one_plus', 'zero_plus', 'one', 'either', 'all'];
 
 function convertSyntax(syntax) {
   var rulesMap = new Map();
@@ -144,11 +144,22 @@ function convertSyntax(syntax) {
       case 'optional':
         populateOptionalRule(rule);
         break;
+      case 'all':
+        populateAll(rule);
+        break;
       default:
         throw Error('Unknown rule type: "' + rule.ruleType + '" in rule ' + _circularJson2.default.stringify(rule));
     }
 
     delete rule.ruleSchema;
+  }
+
+  function populateAll(rule) {
+    var ruleSchema = rule.ruleSchema;
+
+    var subType = ruleSchema[1];
+
+    rule.subRule = lookupRule(subType);
   }
 
   function populateOptionalRule(rule) {
