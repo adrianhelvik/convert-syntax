@@ -27,7 +27,7 @@ function convertSyntax(syntax) {
   for (const rule of shallowRules)
     populateRule(rule)
 
-  return rulesMap.get('main')
+  return rulesMap
 
   function addLexRule(ruleSchema) {
     const type = ruleSchema[0]

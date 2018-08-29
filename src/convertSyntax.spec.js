@@ -14,7 +14,7 @@ it('converts lex types', () => {
     }
   }
 
-  expect(convertSyntax(syntax)).toEqual({
+  expect(convertSyntax(syntax).get('main')).toEqual({
     type: 'main',
     ruleType: 'sequence',
     subRule: [
@@ -63,7 +63,7 @@ it('converts key:value types', () => {
   })
   */
 
-  const rule = convertSyntax(syntax)
+  const rule = convertSyntax(syntax).get('main')
 
   expect(rule.subRule[0].type).toBe('word')
   expect(rule.subRule[0].value).toBe('hello')
@@ -83,7 +83,7 @@ it('converts the many type', () => {
     }
   }
 
-  expect(convertSyntax(syntax)).toEqual({
+  expect(convertSyntax(syntax).get('main')).toEqual({
     type: 'main',
     ruleType: 'many',
     subRule: {
@@ -141,7 +141,7 @@ it('can have delimiters for the many type', () => {
     }
   }
 
-  const converted = convertSyntax(syntax)
+  const converted = convertSyntax(syntax).get('main')
 
   /*
   expect(converted).toEqual({
@@ -190,7 +190,7 @@ it('can convert VERIFIED sequence sub rules', () => {
     }
   }
 
-  const rule = convertSyntax(syntax)
+  const rule = convertSyntax(syntax).get('main')
 
   expect(rule.subRule.subRule[0].subRule[1].ruleType).toBe('verified')
 })
@@ -486,7 +486,8 @@ test('pascal did not get verified rules', () => {
     }
   }
 
-  const rule = convertSyntax(syntax)
+  const rule = convertSyntax(syntax).get('main')
+
   expect(rule.subRule[3].subRule[1].subRule.subRule[1]).toEqual({ ruleType: 'verified' })
 })
 
@@ -513,7 +514,7 @@ it('converts one_plus delimiters', () => {
     }
   }
 
-  const rule = convertSyntax(syntax)
+  const rule = convertSyntax(syntax).get('main')
 
   expect(rule.delimiter.ruleType).toBe('lex')
   expect(rule.delimiter.type).toBe('word')
@@ -530,7 +531,7 @@ it('converts zero_plus delimiters', () => {
     }
   }
 
-  const rule = convertSyntax(syntax)
+  const rule = convertSyntax(syntax).get('main')
 
   expect(rule.delimiter.ruleType).toBe('lex')
   expect(rule.delimiter.type).toBe('word')
@@ -552,7 +553,7 @@ it('can convert all rules', () => {
     },
   }
 
-  const rule = convertSyntax(syntax)
+  const rule = convertSyntax(syntax).get('main')
 
   expect(rule.type).toBe('main')
   expect(rule.ruleType).toBe('all')

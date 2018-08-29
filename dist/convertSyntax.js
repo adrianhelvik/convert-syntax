@@ -101,7 +101,7 @@ function convertSyntax(syntax) {
     }
   }
 
-  return rulesMap.get('main');
+  return rulesMap;
 
   function addLexRule(ruleSchema) {
     var type = ruleSchema[0];
